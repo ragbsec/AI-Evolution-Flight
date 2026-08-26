@@ -1057,7 +1057,7 @@ flowchart LR
     Opt["Optimizer<br/>MIPROv2 or GEPA"]
     Sig --> Mod --> Opt
     Data --> Opt
-    Opt --> Compiled["Compiled Prompt<br/>optimizer-discovered instructions<br/>+ few-shot demonstrations"]
+    Opt --> Compiled["Compiled Prompt<br/>optimizer-discovered instructions<br/>and few-shot demonstrations"]
 
     style Sig fill:#d8e8f5,stroke:#5a8fc2
     style Mod fill:#cfe3d8,stroke:#5a9c74
@@ -1648,10 +1648,10 @@ The second, LLM-era-specific lens comes from Anthropic's widely-cited practition
 flowchart TD
     subgraph Classical["Classical AI Taxonomy: HOW does it decide?"]
         SR["Simple Reflex Agent<br/>current input → action, no memory"]
-        MB["Model-Based Reflex Agent<br/>+ internal world state"]
-        GB["Goal-Based Agent<br/>+ search/planning toward a goal"]
-        UB["Utility-Based Agent<br/>+ ranks paths by utility function"]
-        LN["Learning Agent<br/>+ improves policy from experience"]
+        MB["Model-Based Reflex Agent<br/>with internal world state"]
+        GB["Goal-Based Agent<br/>with search/planning toward a goal"]
+        UB["Utility-Based Agent<br/>that ranks paths by utility function"]
+        LN["Learning Agent<br/>that improves policy from experience"]
         SR --> MB --> GB --> UB --> LN
     end
 
@@ -2179,7 +2179,7 @@ flowchart TD
         VHin["Conversation"] --> VHex["LLM Extraction"] --> VHstore["Vector + Graph + KV<br/>(user/session/agent scoped)"]
     end
     subgraph TKG["Temporal Knowledge Graph (Zep/Graphiti)"]
-        TKGin["Conversation"] --> TKGex["Fact Extraction<br/>+ validity window"] --> TKGstore["Bi-Temporal Graph<br/>(valid_from / valid_to)"]
+        TKGin["Conversation"] --> TKGex["Fact Extraction<br/>with validity window"] --> TKGstore["Bi-Temporal Graph<br/>(valid_from / valid_to)"]
     end
     subgraph OSI["OS-Inspired Tiered (Letta/MemGPT)"]
         Core["Core Memory<br/>(= RAM, in context)"]
@@ -2650,7 +2650,7 @@ flowchart TD
     Choice -->|"Composable guardrails,<br/>lighter-weight, provider flexibility"| OAI["OpenAI Agents SDK"]
     Choice -->|"Enterprise workflow checkpointing,<br/>Microsoft ecosystem"| MAF["Microsoft Agent Framework"]
     Choice -->|"Checkpointed HITL,<br/>already on LangGraph"| LG["LangGraph"]
-    Choice -->|"Full independence,<br/>compose your own stack"| Compose["Custom stack:<br/>durable engine + sandbox<br/>+ guardrail layer"]
+    Choice -->|"Full independence,<br/>compose your own stack"| Compose["Custom stack:<br/>durable engine + sandbox<br/>and guardrail layer"]
 
     style Claude fill:#f0d9c8,stroke:#c97b3b
     style OAI fill:#d8e8f5,stroke:#5a8fc2
@@ -3204,8 +3204,8 @@ A landmark 2025 study, **RAG-MCP**, quantified precisely how sharply tool-select
 flowchart TD
     Query["Incoming task/query"]
     Query --> Size{"Tool catalog size?"}
-    Size -->|"< ~30 tools"| Direct["Expose full catalog<br/>directly to model"]
-    Size -->|"> ~30 tools"| Retrieve["Retrieve top-k relevant<br/>tools via semantic index<br/>(RAG-MCP pattern)"]
+    Size -->|"up to ~30 tools"| Direct["Expose full catalog<br/>directly to model"]
+    Size -->|"more than ~30 tools"| Retrieve["Retrieve top-k relevant<br/>tools via semantic index<br/>(RAG-MCP pattern)"]
     Retrieve --> Confidence{"Retrieval confidence<br/>high for top-k?"}
     Confidence -->|"yes"| Shortlist["Present shortlist only<br/>(fewer distractors,<br/>lower token cost)"]
     Confidence -->|"low — hard query"| Deeper["Search deeper /<br/>widen retrieval<br/>(Best-of-Retrieval)"]
@@ -4440,10 +4440,10 @@ flowchart LR
     A["11.1 Fundamentals<br/>static vs. dynamic eval"] --> B["11.2 LLM-as-Judge<br/>mechanics + 5 biases"]
     A --> C["11.3 RAG Evaluation<br/>RAGAS metrics"]
     A --> D["11.4 Agent Benchmarks<br/>SWE-bench, GAIA, tau-bench"]
-    B --> E["11.5 Human Eval<br/>+ A/B testing"]
+    B --> E["11.5 Human Eval<br/>and A/B testing"]
     C --> E
     D --> E
-    E --> F["11.6 Red-Teaming<br/>+ platform landscape"]
+    E --> F["11.6 Red-Teaming<br/>and platform landscape"]
 ```
 
 🖼 Image Prompt (for illustration tools): A flat infographic radial map with a central hub labeled "Evaluation," six spokes radiating outward each ending in a labeled icon — a magnifying glass over a scale (fundamentals), a robot judge gavel (LLM-as-judge), a document with a checkmark (RAG evaluation), a trophy with a gear (agent benchmarks), two silhouetted heads comparing charts (human evaluation), and a shield with a crosshair (red-teaming) — cool blue-and-slate palette, thin outlined icons, no text beyond labels.
@@ -4703,9 +4703,9 @@ flowchart TD
         G1["466 Qs, 3 difficulty levels"] --> G2["Quasi-exact string match<br/>no partial credit, no judge"]
     end
     subgraph TAU["tau-bench"]
-        T1["Multi-turn retail/airline<br/>+ simulated user + policy"] --> T2["Grades FINAL WORLD STATE<br/>not the transcript"]
+        T1["Multi-turn retail/airline<br/>with simulated user + policy"] --> T2["Grades FINAL WORLD STATE<br/>not the transcript"]
     end
-    SWE --> Confound["Shared confound:<br/>score = model + scaffold<br/>+ harness + tool budget"]
+    SWE --> Confound["Shared confound:<br/>score = model + scaffold<br/>and harness + tool budget"]
     GAIA --> Confound
     TAU --> Confound
 ```
@@ -4815,7 +4815,7 @@ flowchart TD
     Classifier -->|"RL reward"| Attacker2["Attacker updated<br/>via RL objective"]
     Attacker2 --> Start
     Classifier -->|"threshold R reached"| SafetyFT["Periodic safety fine-tune<br/>of victim on collected attacks"]
-    SafetyFT --> Reset["Attacker reset to reference<br/>+ replay buffer cleared"]
+    SafetyFT --> Reset["Attacker reset to reference<br/>and replay buffer cleared"]
     Reset --> Start
 ```
 
@@ -5058,7 +5058,7 @@ flowchart TB
         H2 --> H3["RL (PPO) against<br/>reward model + KL penalty"]
     end
     subgraph CAI["Constitutional AI / RLAIF"]
-        C1["Model self-critiques<br/>+ revises vs. constitution"] --> C2["SFT on revised outputs"]
+        C1["Model self-critiques<br/>and revises vs. constitution"] --> C2["SFT on revised outputs"]
         C2 --> C3["AI evaluator ranks pairs<br/>vs. constitution (RLAIF)"]
         C3 --> C4["Train reward model"] --> C5["RL against reward model"]
     end
